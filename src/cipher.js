@@ -1,15 +1,3 @@
-/* const fnArrow = (x) => {
-  console.log(x.toLowerCase());
-  return x.toLowerCase();
-}; flecha 
-
-() => {}
-
-(parametros) => { codigo ... }
-
-const fnAnonymus = function (x) {}; aninima 
-
-function conNombre (x) {} con nombre*/
 
 const limInfMayus = 65;
 const limSupMayus = 90;
@@ -61,35 +49,50 @@ function desbordeDerMinus(offset, valorLetra) {
 
 
 
-/**
- * obtener el nuevo valor, offset va a caminar hacia la izquierda por lo tanto es una resta.  
- *  ver que el nuevo valor no sea menor al liminte inferior pero si es mayor o = entonces retornar nuevo valor
- * sacer desborde
- * si desborde es mayor al mlimite entonces se pondra valor 
- * 
- */
-
-
-/* function desbordeIzqMayus(offset, valorletra) {
-  const nuevoValor = offset + valorletra;
-  if (nuevoValor >= limInfMayus) {
+function desbordeIzqMayus(offset, valorLetra) {
+  const nuevoValor = valorLetra - offset;
+  if (nuevoValor > limInfMayus) {
     return nuevoValor;
   }
 
-  const desborde = offset % (limInfMayus - limSupMayus);
-  const valor = (valorletra + desborde) - 1;
-  if (valor >= limInfMayus) {
+  const desborde = offset % (limSupMayus - limInfMayus);
+  const valor = (valorLetra - desborde) + 1;
+  if (valor > limInfMayus) {
     return valor;
   }
-  const valor2 = (limSupMayus - 1) + (valor - limSupMayus);
-  const desbordeIzq = valor2 >= limSupMinus;
+  //const diferencia= valor-limInfMayus;
+  const valor2 = (limSupMayus + 1) + (valor - limInfMayus);
+  const desbordeIzq = valor2 > limSupMayus;
   if (desbordeIzq) {
     return limInfMayus;
   }
   else {
     return valor2;
   }
-} */
+}
+
+function desbordeIzqMinus(offset, valorLetra) {
+  const nuevoValor = valorLetra - offset;
+
+  if (nuevoValor > limInfMinus) {
+    return nuevoValor;
+  }
+
+  const desborde = offset % (limSupMinus - limInfMinus);
+  const valor = (valorLetra - desborde) + 1;
+  if (valor > limInfMinus) {
+    return valor;
+  }
+  //const diferencia= valor-limInfMayus;
+  const valor2 = (limSupMinus + 1) + (valor - limInfMinus);
+  const desbordeIzq = valor2 > limSupMinus;
+  if (desbordeIzq) {
+    return limInfMinus;
+  }
+  else {
+    return valor2;
+  }
+}
 
 
 
@@ -105,12 +108,8 @@ function encode(offset, string) {
     for (const letra of palabra) {
       palabraCifrada += cifrarLetra(letra, + offset);
     }
-
     mensajeCifrado.push(palabraCifrada);
   }
-  //console.log(mensajeCifrado);
-  // console.log(mensajeCifrado.join(' '));
-
   return mensajeCifrado.join(' ');
 }
 
@@ -123,7 +122,7 @@ function decode(offset, string) {
   for (const palabra of palabras) {
     let palabraCifrada = '';
     for (const letra of palabra) {
-      palabraCifrada += cifrarLetra(letra, - offset);
+      palabraCifrada += descifrarLetra(letra, offset);
     }
     mensajeCifrado.push(palabraCifrada);
   }
@@ -141,7 +140,6 @@ function cifrarLetra(letra, offset) {
 
   const valorAscii = letra.charCodeAt();
 
-
   if (valorAscii >= 65 && valorAscii <= 90) {
     const valorLetra = desbordeDerMayus(offset, valorAscii);
 
@@ -149,12 +147,12 @@ function cifrarLetra(letra, offset) {
   }
 
   if (valorAscii >= 97 && valorAscii <= 122) {
-    const valorLetraMinus = desbordeDerMinus(offset, valorAscii);
-    
-    return String.fromCharCode(valorLetraMinus);
-  
+    const valorLetra = desbordeDerMinus(offset, valorAscii);
+
+    return String.fromCharCode(valorLetra);
+
   }
- 
+
   return letra;
 
 }
@@ -163,43 +161,25 @@ function cifrarLetra(letra, offset) {
 
 
 function descifrarLetra(letra, offset) {
-  
+
   const valorAscii = letra.charCodeAt();
 
   if (valorAscii >= 65 && valorAscii <= 90) {
 
-    const valorLetra = (offset, valorAscii)
+    const valorLetra = desbordeIzqMayus(offset, valorAscii);
 
-    return String.fromCharCode(valorLetra - offset);
+    return String.fromCharCode(valorLetra);
   }
-  if (valorAscii >= 122 && valorAscii <= 97) {
-    return String.fromCharCode(valorAscii - offset);
+  if (valorAscii >= 97 && valorAscii <= 122) {
+
+    const valorLetra = desbordeIzqMinus(offset, valorAscii);
+
+    return String.fromCharCode(valorLetra);
   }
 
   return letra;
 
 }
-
-/* function desbordeIzqMayus(offset, valorLetra) {
-  const nuevoValor = offset + valorLetra;
-  if (nuevoValor < limSupMinus) {
-    return nuevoValor;
-  }
-
-  const desborde = offset % (limSupMinus - limInfMinus);
-  const valor = (valorLetra + desborde) - 1;
-  if (valor < limSupMinus) {
-    return valor;
-  }
-  const valor2 = (limInfMinus - 1) + (valor - limSupMinus);
-  const desbordeIzq = valor2 < limInfMinus;
-  if (desbordeIzq) {
-    return limSupMinus;
-  }
-  else {
-    return valor2;
-  }
-} */
 
 
 
