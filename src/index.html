@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Caesar Cipher</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div id="root">
-      <h1>Hello world!</h1>
-    </div>
-    <script src="index.js" type="module"></script>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <title>Caesar Cipher</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="entrada">
+    <h1>Bienvenida/o a <strong> Cifrando </strong></h1>
+  </div>
+
+  
+  <div id="cifrar">
+      <h2>En esta pagina podras cifrar o descifrar mensajes para compartirlos o mantenerlos en secreto</h2>
+      <p>Ahora escribe o copia el mensaje que quieres cifrar o decifrar</p>
+      <input type="number" name="Saltos" placeholder="pon el nuemero de saltos" id="offset">
+    <p>
+      <input type="text" name="mensajeC" placeholder="Cifra aquí tú mensaje" id="cifrarMensaje">  
+    </p>
+    <p>
+      
+      <button type="button" id="buttonCifrar">Cifrar</button>
+      <button type="button" id="buttonDescifrar">Descifrar</button>
+    </p>
+
+
+
+    <form>
+      <p> "Mensaje listo"
+        <input type="text" name="mensajeListo" id="mensajeListo">
+      </p>
+      </form>
+
+  </div>
+
+  <script src="index.js" type="module"></script>
+</body>
+
 </html>
